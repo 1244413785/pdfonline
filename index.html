@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF智能合并工具</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📄 PDF智能合并工具</h1>
+            <p class="subtitle">上传多个PDF文件，自定义分配比例，批量生成合并文件</p>
+        </header>
+
+        <div class="main-content">
+            <!-- 文件上传区域 -->
+            <section class="upload-section">
+                <h2>1. 上传PDF文件</h2>
+                <div class="upload-area" id="uploadArea">
+                    <input type="file" id="fileInput" multiple accept=".pdf" style="display: none;">
+                    <div class="upload-placeholder">
+                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="17 8 12 3 7 8"></polyline>
+                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                        </svg>
+                        <p>点击或拖拽PDF文件到此处</p>
+                        <p class="hint">支持多文件上传</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 文件列表和配置区域 -->
+            <section class="config-section" id="configSection" style="display: none;">
+                <h2>2. 配置分配比例</h2>
+                <div class="config-controls">
+                    <label>
+                        <span>生成份数：</span>
+                        <input type="number" id="outputCount" min="1" value="1" class="number-input">
+                        <span class="hint">（自动计算为所有文件页数的最大公倍数）</span>
+                    </label>
+                </div>
+                <div class="files-list" id="filesList"></div>
+            </section>
+
+            <!-- 操作按钮 -->
+            <section class="action-section" id="actionSection" style="display: none;">
+                <h2>3. 生成合并文件</h2>
+                <div class="button-group">
+                    <button id="mergeBtn" class="btn btn-primary">
+                        <span>🚀 开始合并</span>
+                    </button>
+                    <button id="cleanupBtn" class="btn btn-secondary">
+                        <span>🗑️ 清空文件</span>
+                    </button>
+                </div>
+                <div id="statusMessage" class="status-message"></div>
+            </section>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+

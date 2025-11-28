@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>简单上传测试</title>
+    <style>
+        body { padding: 20px; font-family: Arial; }
+        .test-area {
+            border: 2px solid #333;
+            padding: 40px;
+            margin: 20px 0;
+            text-align: center;
+            position: relative;
+        }
+        #testInput {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.01;
+            cursor: pointer;
+            z-index: 10;
+        }
+        #result { margin-top: 20px; padding: 10px; background: #f0f0f0; }
+    </style>
+</head>
+<body>
+    <h1>文件上传测试</h1>
+    <div class="test-area" id="testArea">
+        <input type="file" id="testInput" multiple accept=".pdf">
+        <p>点击这里选择PDF文件</p>
+    </div>
+    <div id="result"></div>
+    <script>
+        const input = document.getElementById('testInput');
+        const area = document.getElementById('testArea');
+        const result = document.getElementById('result');
+        
+        input.addEventListener('change', function(e) {
+            const files = e.target.files;
+            result.innerHTML = `<strong>成功！</strong> 选择了 ${files.length} 个文件：<br>` + 
+                Array.from(files).map(f => f.name).join('<br>');
+            console.log('文件选择成功:', files);
+        });
+        
+        area.addEventListener('click', function(e) {
+            if (e.target !== input) {
+                console.log('点击区域，触发文件输入');
+                input.click();
+            }
+        });
+        
+        console.log('测试页面加载完成');
+    </script>
+</body>
+</html>
+
+
