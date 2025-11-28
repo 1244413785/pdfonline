@@ -285,25 +285,28 @@ def cleanup():
         traceback.print_exc()
         return jsonify({'error': f'清理失败: {str(e)}'}), 500
 
-def open_browser():
-    """延迟打开浏览器"""
-    time.sleep(1.5)  # 等待服务器启动
-    webbrowser.open('http://localhost:5000')
+LISTEN_HOST = os.environ.get('APP_HOST', '0.0.0.0')
+LISTEN_PORT = int(os.environ.get('APP_PORT', 5000))
 
 if __name__ == '__main__':
     print('=' * 50)
     print('PDF智能合并工具服务器')
     print('=' * 50)
     print('服务器正在启动...')
-    print('访问地址: http://localhost:5000')
-    print('按 Ctrl+C 停止服务器')
+    if LISTEN_HOST == '0.0.0.0':
+        print(f'请在浏览器访问: http://<服务器IP>:{LISTEN_PORT}')
+    else:
+        print(f'访问地址: http://{LISTEN_HOST}:{LISTEN_PORT}')
+    print('按 Ctrl+C 停止服务器（运行于生产环境建议使用 systemd 或 gunicorn）')
     print('=' * 50)
     
-    # 在新线程中打开浏览器
-    threading.Thread(target=open_browser, daemon=True).start()
-    
     try:
-        app.run(debug=True, port=5000, host='127.0.0.1', use_reloader=False)
+        app.run(
+            debug=False,
+            port=LISTEN_PORT,
+            host=LISTEN_HOST,
+            use_reloader=False
+        )
     except OSError as e:
         if 'Address already in use' in str(e) or '地址已在使用' in str(e):
             print('\n错误：端口5000已被占用！')
